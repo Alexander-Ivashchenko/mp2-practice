@@ -30,7 +30,8 @@ add_subdirectory(samples)
 include(FetchContent)
 FetchContent_Declare(
   googletest
-  URL https://github.com/google/googletest/archive/refs/tags/v1.18.0.zip
+ GIT_REPOSITORY https://github.com/google/googletest.git
+ GIT_TAG        v1.18.0
 )
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
