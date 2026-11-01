@@ -126,29 +126,40 @@ int TBitField::operator!=(const TBitField &bf) const // сравнение
     return !(*this == bf);
 }
 
-TBitField TBitField::operator|(const TBitField &bf) // операция "или" //todo
+TBitField TBitField::operator|(const TBitField& bf) // операция "или" //todo
 {
-    int maxLen = (BitLen > bf.BitLen) ? BitLen : bf.BitLen;
-    TBitField res(maxLen);
-    for (int i = 0; i < res.MemLen; i++) {
-        TELEM a = (i < MemLen) ? pMem[i] : 0;
-        TELEM b = (i < bf.MemLen) ? bf.pMem[i] : 0;
-        res.pMem[i] = a | b;
+    TBitField res(max(BitLen, bf.BitLen)); 
+    int i = 0;
+
+    
+    for (i = 0; i < min(MemLen, bf.MemLen); ++i) {
+        res.pMem[i] = this->pMem[i] | bf.pMem[i];
     }
+
+   
+    while (i < MemLen) {
+        res.pMem[i] = this->pMem[i];
+        i++;
+    }
+
+ 
+    while (i < bf.MemLen) {
+        res.pMem[i] = bf.pMem[i];
+        i++;
+    }
+
     return res;
 }
 
-TBitField TBitField::operator&(const TBitField &bf) // операция "и"  //todo
+TBitField TBitField::operator&(const TBitField& bf) // операция "и"  //todo
 {
-    int maxLen = (BitLen > bf.BitLen) ? BitLen : bf.BitLen;
-    TBitField res(maxLen);
-    for (int i = 0; i < res.MemLen; i++) {
-        TELEM a = (i < MemLen) ? pMem[i] : 0;
-        TELEM b = (i < bf.MemLen) ? bf.pMem[i] : 0;
-        res.pMem[i] = a & b;
+    TBitField res(max(BitLen, bf.BitLen)); 
 
+    for (int i = 0; i < min(MemLen, bf.MemLen); ++i) {
+        res.pMem[i] = this->pMem[i] & bf.pMem[i];
     }
-  return res;
+
+    return res;
 }
 
 TBitField TBitField::operator~(void) // отрицание
