@@ -16,7 +16,7 @@ TBitField::TBitField(int len)
         throw std::invalid_argument("len must be non-negative");
     }
     BitLen = len;
-    MemLen = (len + MASK_BITS) >> SHIFT_BITS; // todo static const
+    MemLen = (len + MASK_BITS) >> SHIFT_BITS; //  static const
     pMem = new TELEM[MemLen]();
 
 }
@@ -44,7 +44,7 @@ int TBitField::GetMemIndex(const int n) const // индекс Мем для би
 
 TELEM TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
-    return 1u << (n & MASK_BITS); // todo static const
+    return 1u << (n & MASK_BITS); //  static const
 }
 
 // доступ к битам битового поля
@@ -79,7 +79,7 @@ int TBitField::GetBit(const int n) const // получить значение б
         throw std::out_of_range("bit index out of range");
     }
 
-  return (pMem[GetMemIndex(n)] & GetMemMask(n)) >> (n & MASK_BITS);// todo static const
+  return (pMem[GetMemIndex(n)] & GetMemMask(n)) >> (n & MASK_BITS);//  static const
 }
 
 // битовые операции
@@ -126,7 +126,7 @@ int TBitField::operator!=(const TBitField &bf) const // сравнение
     return !(*this == bf);
 }
 
-TBitField TBitField::operator|(const TBitField& bf) // операция "или" //todo
+TBitField TBitField::operator|(const TBitField& bf) // операция "или" 
 {
     TBitField res(max(BitLen, bf.BitLen)); 
     int i = 0;
@@ -151,7 +151,7 @@ TBitField TBitField::operator|(const TBitField& bf) // операция "или"
     return res;
 }
 
-TBitField TBitField::operator&(const TBitField& bf) // операция "и"  //todo
+TBitField TBitField::operator&(const TBitField& bf) // операция "и" 
 {
     TBitField res(max(BitLen, bf.BitLen)); 
 
@@ -168,7 +168,7 @@ TBitField TBitField::operator~(void) // отрицание
     for (int i = 0; i < MemLen; i++) {
         ans.pMem[i] = ~ans.pMem[i];
     }
-    int extra = MemLen * BITS_PER_ELEM - BitLen; //todo const
+    int extra = MemLen * BITS_PER_ELEM - BitLen; 
     if (extra > 0) {
         ans.pMem[MemLen - 1] &= (1u << (BITS_PER_ELEM - extra)) - 1;
     }
