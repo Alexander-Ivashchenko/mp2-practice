@@ -208,11 +208,17 @@ public:
 // Динамическая матрица - 
 // шаблонная матрица на динамической памяти
 template<typename T>
-class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
+class TDynamicMatrix : public TDynamicVector<TDynamicVector<T>>
+
+    
 {
     using TDynamicVector<TDynamicVector<T>>::pMem;
     using TDynamicVector<TDynamicVector<T>>::sz;
-public:
+
+public: TDynamicMatrix(const TDynamicMatrix&) = default;
+      TDynamicMatrix(TDynamicMatrix&&) = default;
+      TDynamicMatrix& operator=(const TDynamicMatrix&) = default;
+      TDynamicMatrix& operator=(TDynamicMatrix&&) = default;
 
     TDynamicMatrix(size_t s = 1) : TDynamicVector<TDynamicVector<T>>(s)
     {
@@ -222,25 +228,27 @@ public:
 
     using TDynamicVector<TDynamicVector<T>>::operator[];
     using TDynamicVector<TDynamicVector<T>>::size; 
-
+    using TDynamicVector<TDynamicVector<T>>::operator==;
+    using TDynamicVector<TDynamicVector<T>>::operator!=;
+    
     
     TDynamicVector<T>& at(size_t ind) {
         return TDynamicVector<TDynamicVector<T>>::at(ind);
     }
 
     // сравнение
-    bool operator==(const TDynamicMatrix& m) const noexcept
-    {
-        if (sz != m.sz)
-            return false;
+   // bool operator==(const TDynamicMatrix& m) const noexcept
+    //{
+      //  if (sz != m.sz)
+        //    return false;
 
-        for (size_t i = 0; i < sz; i++)
-            if (pMem[i] != m.pMem[i])
-                return false;
+        //for (size_t i = 0; i < sz; i++)
+          //  if (pMem[i] != m.pMem[i])
+          //      return false;
 
-        return true;
-    }
-
+      //  return true;
+    //}
+    
     // матрично-скалярные операции
     TDynamicMatrix operator*(const T& val)
     {
